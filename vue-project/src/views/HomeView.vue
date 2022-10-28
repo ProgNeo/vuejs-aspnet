@@ -4,6 +4,8 @@ import AnimeList from "@/components/AnimeList.vue";
 
 <template>
   <main>
-    <AnimeList />
+    <b-container>
+      <AnimeList />
+    </b-container>
   </main>
 </template>

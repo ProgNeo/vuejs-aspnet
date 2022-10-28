@@ -19,11 +19,7 @@
 </script>
 
 <template>
-  <div>
-    <b-card-group deck>
-      <div v-for="anime in animeObjects">
-        <AnimeCard :anime="anime" />
-      </div>
-    </b-card-group>
-  </div>
+  <b-card-group>
+    <AnimeCard v-for="anime in animeObjects" :anime="anime" />
+  </b-card-group>
 </template>

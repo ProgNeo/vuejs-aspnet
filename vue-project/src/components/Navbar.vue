@@ -20,14 +20,14 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="light">
-      <b-navbar-brand href="#"><FontAwesomeIcon icon="fas fa-cat" /></b-navbar-brand>
+      <b-navbar-brand to="/"><FontAwesomeIcon icon="fas fa-cat" /></b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav="">
         <b-navbar-nav>
           <div v-for="genre in genres">
-            <b-nav-item href="#">{{ genre.name }}</b-nav-item>
+            <b-nav-item to="#">{{ genre.name }}</b-nav-item>
           </div>
         </b-navbar-nav>
       </b-collapse>
