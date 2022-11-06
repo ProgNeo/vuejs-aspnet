@@ -3,8 +3,18 @@ import HomeView from '../views/HomeView.vue'
 import NotFound from '../views/NotFound.vue'
 import AnimeDetail from '../views/AnimeDetail.vue'
 
+function removeQueryParams(to) {
+  if (Object.keys(to.query).length) {
+    return {path: to.path, query: {}, hash: to.hash}
+  }
+}
+
+function removeHash(to) {
+  if (to.hash) return { path: to.path, query: to.query, hash: '' }
+}
+
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
@@ -12,7 +22,7 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/anime/:id',
+      path: '/anime/:id(\\d+)',
       name: 'anime-detail',
       component: AnimeDetail,
       params: true

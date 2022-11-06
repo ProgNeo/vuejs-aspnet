@@ -1,5 +1,5 @@
 <script setup>
-import AnimeList from "@/components/AnimeList.vue";
+  import AnimeList from "@/components/AnimeList.vue";
 </script>
 
 <template>

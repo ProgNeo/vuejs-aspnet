@@ -15,8 +15,9 @@
         style="width: 300px;"
         class="text-center m-2"
     >
-      <b-button variant="link" :to="`/anime/${anime.id}?show=image`" class="card-link">Картинка</b-button>
-      <b-button variant="link" :to="`/anime/${anime.id}?show=info`" class="card-link">Описание</b-button>
+
+      <b-button variant="link" :to="{ path: `/anime/${anime.id}`, hash: '#image' }" class="card-link">Картинка</b-button>
+      <b-button variant="link" :to="{ path: `/anime/${anime.id}`, hash: '#info' }" class="card-link">Описание</b-button>
     </b-card>
   </div>
 </template>

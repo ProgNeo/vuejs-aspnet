@@ -1,20 +1,19 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
+﻿# https://hub.docker.com/_/microsoft-dotnet
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["asp-project/asp-project.csproj", "asp-project/"]
-RUN dotnet restore "asp-project/asp-project.csproj"
+WORKDIR /source
+EXPOSE 80
+EXPOSE 5251
+
+# copy csproj and restore as distinct layers
+COPY *.csproj .
+RUN dotnet restore --use-current-runtime  
+
+# copy everything else and build app
 COPY . .
-WORKDIR "/src/asp-project"
-RUN dotnet build "asp-project.csproj" -c Release -o /app/build
+RUN dotnet publish -c Debug -o /app --use-current-runtime --self-contained false --no-restore
 
-FROM build AS publish
-RUN dotnet publish "asp-project.csproj" -c Release -o /app/publish
-
-FROM base AS final
+# final stage/image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app .
 ENTRYPOINT ["dotnet", "asp-project.dll"]

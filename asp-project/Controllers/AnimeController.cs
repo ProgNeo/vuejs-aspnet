@@ -27,6 +27,13 @@ namespace asp_project.Controllers
         {
             return await _context.AnimeObjects.ToListAsync();
         }
+        
+        //GET: api/Anime/Genre/1
+        [HttpGet("Genre/{id}")]
+        public async Task<ActionResult<IEnumerable<AnimeObject>>> GetAnimeObjectsByGenreId(int id)
+        {
+            return await _context.AnimeObjects.Where(x => x.Genre == id).ToListAsync();
+        }
 
         // GET: api/Anime/5
         [HttpGet("{id}")]
