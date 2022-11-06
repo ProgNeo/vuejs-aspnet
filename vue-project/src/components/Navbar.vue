@@ -1,5 +1,5 @@
 <script setup>
-  import { onBeforeMount, ref } from "vue";
+  import {onBeforeMount, ref} from "vue";
 
   const genres = ref([]);
 
@@ -27,7 +27,7 @@
       <b-collapse id="nav-collapse" is-nav="">
         <b-navbar-nav>
           <div v-for="genre in genres">
-            <b-nav-item @click="$router.replace({ path: $route.path, query: { genre: `${genre.id}` } })">{{ genre.name }}</b-nav-item>
+            <b-nav-item :to="{ path: '/', query: { genre: `${genre.id}` } }">{{ genre.name }}</b-nav-item>
           </div>
         </b-navbar-nav>
       </b-collapse>
