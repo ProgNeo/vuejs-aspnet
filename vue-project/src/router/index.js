@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import NotFound from '../views/NotFound.vue'
 import AnimeDetail from '../views/AnimeDetail.vue'
+import SearchView from '../views/SearchView.vue'
 
 function removeQueryParams(to) {
   if (Object.keys(to.query).length) {
@@ -22,15 +23,21 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/anime/:id(\\d+)',
+      path: '/anime/:id',
       name: 'anime-detail',
       component: AnimeDetail,
-      params: true
+      params: true,
+
     },
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: NotFound
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: SearchView
     }
   ]
 })

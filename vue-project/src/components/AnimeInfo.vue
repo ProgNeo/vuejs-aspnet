@@ -1,9 +1,9 @@
-<script setup>
-  const props = defineProps ({
-    info: Object
-  });
-</script>
-
 <template>
   {{ info }}
 </template>
+
+<script setup>
+const props = defineProps ({
+  info: String
+});
+</script>

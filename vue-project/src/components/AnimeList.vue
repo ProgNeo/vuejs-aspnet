@@ -21,11 +21,15 @@ watch(route, () => {
 
 onBeforeMount(async () => {
   await getData()
-});
+})
 
 async function getData() {
   if ('genre' in route.query){
-    animeObjects.value = (await axios.get(`/api/Anime/Genre/${genre.value}`)).data
+    animeObjects.value = (await axios.get('/api/Anime', {
+      params: {
+        genreId: genre.value
+      }
+    })).data
   } else {
     animeObjects.value = (await axios.get('/api/Anime/')).data
   }

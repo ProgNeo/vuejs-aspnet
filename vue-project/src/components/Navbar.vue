@@ -29,6 +29,9 @@
           <div v-for="genre in genres">
             <b-nav-item :to="{ path: '/', query: { genre: `${genre.id}` } }">{{ genre.name }}</b-nav-item>
           </div>
+          <div>
+            <b-nav-item :to="{ path: '/search' }">Поиск</b-nav-item>
+          </div>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

@@ -23,17 +23,15 @@ namespace asp_project.Controllers
 
         // GET: api/Anime
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AnimeObject>>> GetAnimeObjects()
+        public async Task<ActionResult<IEnumerable<AnimeObject>>> GetAnimeObjects(int? genreId)
         {
-            return await _context.AnimeObjects.ToListAsync();
+            return genreId switch
+            {
+                null => await _context.AnimeObjects.ToListAsync(),
+                _ => await _context.AnimeObjects.Where(anime => anime.Genre == genreId).ToListAsync()
+            };
         }
         
-        //GET: api/Anime/Genre/1
-        [HttpGet("Genre/{id}")]
-        public async Task<ActionResult<IEnumerable<AnimeObject>>> GetAnimeObjectsByGenreId(int id)
-        {
-            return await _context.AnimeObjects.Where(x => x.Genre == id).ToListAsync();
-        }
 
         // GET: api/Anime/5
         [HttpGet("{id}")]
