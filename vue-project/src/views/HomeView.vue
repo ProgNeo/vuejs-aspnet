@@ -1,7 +1,3 @@
-<script setup>
-  import AnimeList from "@/components/AnimeList.vue";
-</script>
-
 <template>
   <main>
     <b-container>
@@ -9,3 +5,7 @@
     </b-container>
   </main>
 </template>
+
+<script setup>
+import AnimeList from "@/components/AnimeList.vue";
+</script>

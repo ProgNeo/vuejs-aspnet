@@ -31,7 +31,6 @@ namespace asp_project.Controllers
                 _ => await _context.AnimeObjects.Where(anime => anime.Genre == genreId).ToListAsync()
             };
         }
-        
 
         // GET: api/Anime/5
         [HttpGet("{id}")]

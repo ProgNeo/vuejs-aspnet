@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import NotFound from '../views/NotFound.vue'
 import AnimeDetail from '../views/AnimeDetail.vue'
 import SearchView from '../views/SearchView.vue'
+import CreateView from '../views/CreateView.vue'
 
 function removeQueryParams(to) {
   if (Object.keys(to.query).length) {
@@ -38,6 +39,11 @@ const router = createRouter({
       path: '/search',
       name: 'search',
       component: SearchView
+    },
+    {
+      path: '/create',
+      name: 'create',
+      component: CreateView
     }
   ]
 })

@@ -1,22 +1,3 @@
-<script setup>
-  import {onBeforeMount, ref} from "vue";
-
-  const genres = ref([]);
-
-  onBeforeMount(async () => {
-    const properties = {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json",
-      }
-    };
-
-    genres.value = await fetch("/api/Genres", properties)
-        .then(response => response.json());
-  });
-</script>
-
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="light">
@@ -32,8 +13,22 @@
           <div>
             <b-nav-item :to="{ path: '/search' }">Поиск</b-nav-item>
           </div>
+          <div>
+            <b-nav-item :to="{ path: '/create' }">Добавить</b-nav-item>
+          </div>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
   </div>
 </template>
+
+<script setup>
+import {onBeforeMount, ref} from "vue"
+import axios from "axios"
+
+const genres = ref([])
+
+onBeforeMount(async () => {
+  genres.value = (await axios.get(`/api/Genres`)).data
+})
+</script>

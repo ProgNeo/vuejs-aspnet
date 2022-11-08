@@ -31,7 +31,6 @@ const id = ref(route.value.params.id)
 const type = ref('')
 
 watch(route.value, () => {
-  console.log(route.value.hash)
   type.value = route.value.hash
 })
 
