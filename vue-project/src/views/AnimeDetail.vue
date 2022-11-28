@@ -19,11 +19,11 @@
 </template>
 
 <script setup>
-import {ref, onBeforeMount, watch} from "vue";
-import { useRoute } from 'vue-router'
-import AnimeImage from "@/components/AnimeImage.vue";
-import AnimeInfo from "@/components/AnimeInfo.vue";
-import axios from "axios";
+import {ref, onBeforeMount, watch} from "vue"
+import {useRoute} from 'vue-router'
+import AnimeImage from "@/components/AnimeImage.vue"
+import AnimeInfo from "@/components/AnimeInfo.vue"
+import AnimeService from "@/services/animeService"
 
 const anime = ref();
 const route = ref(useRoute())
@@ -35,7 +35,7 @@ watch(route.value, () => {
 })
 
 onBeforeMount(async () => {
-  anime.value = (await axios.get(`/api/Anime/${id.value}`)).data
+  anime.value = (await AnimeService.get(id.value)).data
   type.value = route.value.hash
 });
 </script>

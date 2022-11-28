@@ -33,7 +33,7 @@ namespace asp_project.Controllers
         }
 
         // GET: api/Anime/5
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<AnimeObject>> GetAnimeObject(int id)
         {
             var animeObject = await _context.AnimeObjects.FindAsync(id);
@@ -48,7 +48,7 @@ namespace asp_project.Controllers
 
         // PUT: api/Anime/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> PutAnimeObject(int id, AnimeObject animeObject)
         {
             if (id != animeObject.Id)
@@ -89,7 +89,7 @@ namespace asp_project.Controllers
         }
 
         // DELETE: api/Anime/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteAnimeObject(int id)
         {
             var animeObject = await _context.AnimeObjects.FindAsync(id);

@@ -1,37 +1,19 @@
 <template>
-  <b-card-group>
-    <AnimeCard v-for="anime in animeObjects" :anime="anime" />
+  <b-card-group class="d-flex justify-content-center">
+    <AnimeCard @update="update" v-for="anime in props.animeList" :anime="anime" />
   </b-card-group>
 </template>
 
 <script setup>
-import {onBeforeMount, ref, watch} from "vue";
-import AnimeCard from "@/components/AnimeCard.vue";
-import axios from "axios";
-import {useRoute} from "vue-router";
+import AnimeCard from "@/components/AnimeCard.vue"
 
-const route = useRoute()
-const animeObjects = ref([]);
-const genre = ref(route.query.genre)
-
-watch(route, () => {
-  genre.value = route.query.genre
-  getData()
+const props = defineProps({
+  animeList: Array
 })
 
-onBeforeMount(async () => {
-  await getData()
-})
+const emit = defineEmits(["update"])
 
-async function getData() {
-  if ('genre' in route.query){
-    animeObjects.value = (await axios.get('/api/Anime', {
-      params: {
-        genreId: genre.value
-      }
-    })).data
-  } else {
-    animeObjects.value = (await axios.get('/api/Anime/')).data
-  }
+function update() {
+  emit("update")
 }
 </script>

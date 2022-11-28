@@ -28,8 +28,8 @@
 </template>
 
 <script setup>
-import {onBeforeMount, ref, watch} from "vue";
-import axios from "axios";
+import {computed, onBeforeMount, ref, watch} from "vue"
+import AnimeService from "@/services/animeService"
 
 const animeObjects = ref([])
 const filteredAnimeObjects = ref([])
@@ -39,31 +39,31 @@ const info =  ref('')
 const genre = ref('0')
 
 watch(title, async () => {
-  await filterData()
+  filteredAnimeObjects.value = filterAnime.value
 })
 
 watch(info, async () => {
-  await filterData()
+  filteredAnimeObjects.value = filterAnime.value
 })
 
 watch(genre, async () => {
-  await filterData()
+  filteredAnimeObjects.value = filterAnime.value
 })
 
 onBeforeMount(async () => {
   await getData()
 })
 
-function filterData() {
-  filteredAnimeObjects.value = animeObjects.value.filter(anime =>
+const filterAnime = computed(() => {
+  return animeObjects.value.filter(anime =>
       (genre.value === '0' || anime.genre.toString() === genre.value) &&
       anime.title.toLowerCase().includes(title.value.toLowerCase()) &&
       anime.info.toLowerCase().includes(info.value.toLowerCase())
   )
-}
+})
 
 async function getData() {
-  animeObjects.value = (await axios.get(`/api/Anime`)).data
+  animeObjects.value = (await AnimeService.getAll()).data
   filteredAnimeObjects.value = animeObjects.value
 }
 </script>
