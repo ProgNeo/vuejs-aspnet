@@ -37,6 +37,8 @@
 <script setup>
 import {onBeforeMount, reactive, ref} from "vue"
 import axios from "axios";
+import AnimeService from "@/services/animeService"
+import GenresService from "@/services/genresService"
 
 const genres = ref([])
 const message = ref('')
@@ -59,7 +61,7 @@ function uploadImage(e) {
 }
 
 async function submitForm() {
-  let request = await axios.post('/api/Anime', data)
+  await AnimeService.create(data)
   message.value = "Успех!"
   resetForm()
 }
@@ -72,6 +74,6 @@ function resetForm() {
 }
 
 onBeforeMount(async () => {
-  genres.value = (await axios.get(`/api/Genres`)).data
+  genres.value = (await GenresService.getAll()).data
 })
 </script>
