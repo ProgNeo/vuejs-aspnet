@@ -21,7 +21,7 @@
         </div>
         <div class="mb-3">
           <label class="form-label">Картинка</label>
-          <input ref="image" class="form-control" type="file" @change="uploadImage()">
+          <input ref="image" class="form-control" type="file" @change="uploadImage">
         </div>
         <div class="col-12">
           <textarea v-model="data.info" placeholder="Полное описание" class="form-control" rows="5" required="required"/>
@@ -48,20 +48,17 @@ const data = reactive({
   genre: 1
 })
 
-function uploadImage() {
-  data.image = this.$refs.image.files[0]
-  let fileExtension = data.image.name.replace(/^.*\./, "")
-
-  let allowedExtensions = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png)$/i;
-  if (!allowedExtensions.exec(data.image.name)) {
-    message.value = "Вы можете загрузить только файлы с расширениями: jpg, jpeg и png";
-    this.$refs.image.value = "";
+function uploadImage(e) {
+  const image = e.target.files[0];
+  const reader = new FileReader();
+  reader.readAsDataURL(image);
+  reader.onload = e =>{
+    data.image = e.target.result
+    console.log(data.image)
   }
-  message.value = data.image
 }
 
 async function submitForm() {
-  data.image = 'https://dere.shikimori.one/system/animes/original/13629.jpg?1635226170'
   let request = await axios.post('/api/Anime', data)
   message.value = "Успех!"
   resetForm()
