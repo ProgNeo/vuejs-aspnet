@@ -55,7 +55,6 @@ namespace asp_project.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(animeObject).State = EntityState.Modified;
 
             try
