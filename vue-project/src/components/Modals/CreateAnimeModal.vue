@@ -6,10 +6,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <form ref="createForm" @submit.prevent="$emit('create', anime)" method="POST" class="row g-3 justify-content-evenly">
-            <b-col sm="4">
-              <input v-model="anime.title" required type="text" class="form-control" placeholder="Наименование">
-            </b-col>
+        <form ref="createForm" @submit.prevent="$emit('create', anime)" method="POST" class="row g-3 justify-content-evenly">
+          <b-col sm="4">
+            <input v-model="anime.title" required type="text" class="form-control" placeholder="Наименование">
+          </b-col>
 
           <b-col sm="4">
             <input v-model="anime.description" type="text" class="form-control" placeholder="Краткое описание">
@@ -42,6 +42,7 @@
 <script setup>
 import Modal from '@/components/Modal.vue'
 import {reactive, ref} from "vue"
+
 const props = defineProps({
   genres: Array
 })
