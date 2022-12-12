@@ -3,17 +3,13 @@
   <EditModal @edit="editAnimeObject" ref="editModalRef" :genres="genresList"/>
   <DeleteModal @delete="deleteAnimeObject" ref="deleteModalRef"/>
 
-  <main>
-    <b-container>
-      <div class="my-4 d-flex flex-row">
-        <h2 class="me-3">Список аниме</h2>
-        <b-button class="me-2" variant="outline-primary" @click="onCreateClick">
-          <FontAwesomeIcon icon="fas fa-plus" />
-        </b-button>
-      </div>
-      <AnimeList @edit-anime="onEditClick" @delete-anime="onDeleteClick" :anime-list="animeList"/>
-    </b-container>
-  </main>
+  <div class="my-4 d-flex flex-row">
+    <h2 class="me-3">Список аниме</h2>
+    <b-button class="me-2" variant="outline-primary" @click="onCreateClick">
+      <FontAwesomeIcon icon="fas fa-plus" />
+    </b-button>
+  </div>
+  <AnimeList @edit-anime="onEditClick" @delete-anime="onDeleteClick" :anime-list="animeList"/>
 </template>
 
 <script setup>

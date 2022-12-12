@@ -1,30 +1,28 @@
 <template>
-  <b-container>
-    <div class="row my-3 gx-3 gy-2 align-items-end">
-      <div class="col-4">
-        <label class="visually">Жанр</label>
-        <select v-model="genre" class="form-select">
-          <option value="0" selected>Все</option>
-          <option value="1">Экшн</option>
-          <option value="2">Психологическое</option>
-          <option value="3">Драма</option>
-        </select>
-      </div>
-      <div class="col-4">
-        <label class="visually">Название</label>
-        <input v-model="title" type="text" class="form-control" placeholder="Название">
-      </div>
-      <div class="col-4">
-        <label class="visually">Описание</label>
-        <input v-model="info" type="text" class="form-control" placeholder="Описание">
-      </div>
+  <div class="row my-3 gx-3 gy-2 align-items-end">
+    <div class="col-4">
+      <label class="visually">Жанр</label>
+      <select v-model="genre" class="form-select">
+        <option value="0" selected>Все</option>
+        <option value="1">Экшн</option>
+        <option value="2">Психологическое</option>
+        <option value="3">Драма</option>
+      </select>
     </div>
-    <b-list-group>
-      <b-list-group-item v-for="anime in filteredAnimeObjects">
-        <router-link :to="{ path: `/anime/${anime.id}` }">{{ anime.title }}</router-link>
-      </b-list-group-item>
-    </b-list-group>
-  </b-container>
+    <div class="col-4">
+      <label class="visually">Название</label>
+      <input v-model="title" type="text" class="form-control" placeholder="Название">
+    </div>
+    <div class="col-4">
+      <label class="visually">Описание</label>
+      <input v-model="info" type="text" class="form-control" placeholder="Описание">
+    </div>
+  </div>
+  <b-list-group>
+    <b-list-group-item v-for="anime in filteredAnimeObjects">
+      <router-link :to="{ path: `/anime/${anime.id}` }">{{ anime.title }}</router-link>
+    </b-list-group-item>
+  </b-list-group>
 </template>
 
 <script setup>

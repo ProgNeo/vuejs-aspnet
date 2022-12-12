@@ -1,10 +1,11 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router'
 import BoostrapVue from 'bootstrap-vue-3'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {fas} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import {globalCookiesConfig} from "vue3-cookies"
 
 import "bootstrap/dist/css/bootstrap.css"
 import "bootstrap-vue-3/dist/bootstrap-vue-3.css"
@@ -16,5 +17,13 @@ app.use(router)
 app.use(BoostrapVue)
 app.component('FontAwesomeIcon', FontAwesomeIcon)
 library.add(fas)
+
+globalCookiesConfig({
+    expireTimes: "30d",
+    path: "/",
+    domain: "",
+    secure: true,
+    sameSite: "None",
+});
 
 app.mount('#app')
