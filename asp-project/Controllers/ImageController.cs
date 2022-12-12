@@ -20,7 +20,7 @@ namespace asp_project.Controllers
         // POST: api/Image
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<string>> PostAnimeImage([FromForm] AnimeImage animeObject)
+        public async Task<ActionResult<string>> PostAnimeImage([FromForm] AnimeObjectViewModel animeObject)
         {
             if (_webHostEnvironment == null) return BadRequest();
             

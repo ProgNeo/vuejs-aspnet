@@ -26,6 +26,7 @@
 
     <ItemGroup>
       <Folder Include="DataBase\Images\Anime" />
+      <Folder Include="wwwroot\media" />
     </ItemGroup>
 
 </Project>

@@ -10,7 +10,11 @@ class AnimeService {
     }
 
     create(data) {
-        return http.post('/Anime', data)
+        return http.post('/Anime', data,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
 
     update(id, data) {

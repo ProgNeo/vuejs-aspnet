@@ -15,10 +15,12 @@ namespace asp_project.Controllers
     public class AnimeController : ControllerBase
     {
         private readonly AnimeContext _context;
+        private static IWebHostEnvironment? _webHostEnvironment;
 
-        public AnimeController(AnimeContext context)
+        public AnimeController(AnimeContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: api/Anime
@@ -79,12 +81,34 @@ namespace asp_project.Controllers
         // POST: api/Anime
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<AnimeObject>> PostAnimeObject(AnimeObject animeObject)
+        public async Task<ActionResult<AnimeObject>> PostAnimeObject([FromForm] AnimeObjectViewModel viewModel)
         {
-            _context.AnimeObjects.Add(animeObject);
+            if (_webHostEnvironment == null) return BadRequest();
+            
+            var fileName = DateTime.Now.Ticks + ".png";
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "Media", fileName);
+
+            await using var fileSteam = new FileStream(filePath, FileMode.Create);
+            await viewModel.Image.CopyToAsync(fileSteam);
+            
+            var newObject = new AnimeObject
+            {
+                Id = 0,
+                Title = viewModel.Title,
+                Genre = viewModel.Genre,
+                Image = $"{Request.Scheme}://{Request.Host}/media/{fileName}",
+                Description = viewModel.Description,
+                Info = viewModel.Info
+            };
+            
+            _context.AnimeObjects.Add(newObject);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAnimeObject", new { id = animeObject.Id }, animeObject);
+            return CreatedAtAction(
+                "GetAnimeObject", 
+                new { id = newObject.Id }, 
+                newObject
+            );
         }
 
         // DELETE: api/Anime/5

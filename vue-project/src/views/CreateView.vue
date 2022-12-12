@@ -40,35 +40,42 @@ import axios from "axios";
 import AnimeService from "@/services/animeService"
 import GenresService from "@/services/genresService"
 
+const image =  ref()
 const genres = ref([])
 const message = ref('')
 const data = reactive({
   title: '',
-  image: '',
   description: '',
   info: '',
-  genre: 1
+  genre: 1,
+  image: File
 })
 
 function uploadImage(e) {
-  const image = e.target.files[0];
-  const reader = new FileReader();
-  reader.readAsDataURL(image);
-  reader.onload = e =>{
-    data.image = e.target.result
-    console.log(data.image)
-  }
+  data.image = e.target.files[0]
 }
 
 async function submitForm() {
-  await AnimeService.create(data)
+  const formData = new FormData()
+
+  formData.append('Title', data.title)
+  formData.append('Genre', data.genre)
+  formData.append('Description', data.description)
+  formData.append('Info', data.info)
+  formData.append('Image', data.image)
+
+  let response = await axios.post('/api/Anime', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+
   message.value = "Успех!"
   resetForm()
 }
 
 function resetForm() {
   data.title = ''
-  data.image = ''
   data.description = ''
   data.info =  ''
 }
