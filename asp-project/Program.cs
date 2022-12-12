@@ -13,23 +13,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AnimeContext>(
     options =>
     {
-        options.UseMySql(builder.Configuration.GetConnectionString("AnimeDB"), ServerVersion.Parse("8.0.31-0ubuntu0.22.04.1"));
+        options.UseMySql(builder.Configuration.GetConnectionString("AnimeDB"), 
+            ServerVersion.Parse("8.0.31-0ubuntu0.22.04.1"));
     });
 
-var app = builder.Build();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
-app.UseCors(options =>
-    options.WithOrigins("http://localhost:5173")
-        .AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-);
-app.UseCors(options =>
-    options.WithOrigins("http://localhost:5174")
-        .AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-);
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -39,6 +31,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseAuthorization();

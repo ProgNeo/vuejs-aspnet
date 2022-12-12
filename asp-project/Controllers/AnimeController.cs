@@ -12,14 +12,12 @@ namespace asp_project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AnimeController : ControllerBase
+    public class AnimeController : BaseController
     {
-        private readonly AnimeContext _context;
         private static IWebHostEnvironment? _webHostEnvironment;
 
-        public AnimeController(AnimeContext context, IWebHostEnvironment webHostEnvironment)
+        public AnimeController(AnimeContext context, IWebHostEnvironment webHostEnvironment) : base(context)
         {
-            _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -53,6 +51,18 @@ namespace asp_project.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> PutAnimeObject(int id, AnimeObject animeObject)
         {
+            if (!CheckSession())
+            {
+                return new JsonResult(new BaseResponse(false, "Access denied"));
+            }
+            
+            var roles = await GetRolesByUser();
+            
+            if (!(roles.Contains(Roles.Moderator.ToString()) || roles.Contains(Roles.Superuser.ToString())))
+            {
+                return new JsonResult(new BaseResponse(false, "Access denied"));
+            }
+            
             if (id != animeObject.Id)
             {
                 return BadRequest();
@@ -83,6 +93,18 @@ namespace asp_project.Controllers
         [HttpPost]
         public async Task<ActionResult<AnimeObject>> PostAnimeObject([FromForm] AnimeObjectViewModel viewModel)
         {
+            if (!CheckSession())
+            {
+                return new JsonResult(new BaseResponse(false, "Access denied"));
+            }
+            
+            var roles = await GetRolesByUser();
+            
+            if (!(roles.Contains(Roles.Moderator.ToString()) || roles.Contains(Roles.Superuser.ToString())))
+            {
+                return new JsonResult(new BaseResponse(false, "Access denied"));
+            }
+
             if (_webHostEnvironment == null) return BadRequest();
             
             var fileName = DateTime.Now.Ticks + ".png";
@@ -115,6 +137,18 @@ namespace asp_project.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteAnimeObject(int id)
         {
+            if (!CheckSession())
+            {
+                return new JsonResult(new BaseResponse(false, "Access denied"));
+            }
+            
+            var roles = await GetRolesByUser();
+            
+            if (!(roles.Contains(Roles.Moderator.ToString()) || roles.Contains(Roles.Superuser.ToString())))
+            {
+                return new JsonResult(new BaseResponse(false, "Access denied"));
+            }
+            
             var animeObject = await _context.AnimeObjects.FindAsync(id);
             if (animeObject == null)
             {

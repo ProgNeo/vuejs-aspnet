@@ -12,13 +12,10 @@ namespace asp_project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GenresController : ControllerBase
+    public class GenresController : BaseController
     {
-        private readonly AnimeContext _context;
-
-        public GenresController(AnimeContext context)
+        public GenresController(AnimeContext context) : base(context)
         {
-            _context = context;
         }
 
         // GET: api/Genres
@@ -47,6 +44,18 @@ namespace asp_project.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGenre(int id, Genre genre)
         {
+            if (!CheckSession())
+            {
+                return new JsonResult(new BaseResponse(false, "Access denied"));
+            }
+            
+            var roles = await GetRolesByUser();
+            
+            if (!(roles.Contains(Roles.Moderator.ToString()) || roles.Contains(Roles.Superuser.ToString())))
+            {
+                return new JsonResult(new BaseResponse(false, "Access denied"));
+            }
+            
             if (id != genre.Id)
             {
                 return BadRequest();
@@ -78,6 +87,20 @@ namespace asp_project.Controllers
         [HttpPost]
         public async Task<ActionResult<Genre>> PostGenre(Genre genre)
         {
+            
+            if (!CheckSession())
+            {
+                return new JsonResult(new BaseResponse(false, "Access denied"));
+            }
+            
+            var roles = await GetRolesByUser();
+            
+            if (!(roles.Contains(Roles.Moderator.ToString()) || roles.Contains(Roles.Superuser.ToString())))
+            {
+                return new JsonResult(new BaseResponse(false, "Access denied"));
+            }
+
+            
             _context.Genres.Add(genre);
             await _context.SaveChangesAsync();
 
@@ -88,6 +111,18 @@ namespace asp_project.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGenre(int id)
         {
+            if (!CheckSession())
+            {
+                return new JsonResult(new BaseResponse(false, "Access denied"));
+            }
+            
+            var roles = await GetRolesByUser();
+            
+            if (!(roles.Contains(Roles.Moderator.ToString()) || roles.Contains(Roles.Superuser.ToString())))
+            {
+                return new JsonResult(new BaseResponse(false, "Access denied"));
+            }
+
             var genre = await _context.Genres.FindAsync(id);
             if (genre == null)
             {

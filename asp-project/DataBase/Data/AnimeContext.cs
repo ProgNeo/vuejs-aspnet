@@ -17,6 +17,10 @@ namespace Anime.Data
         {
         }
 
+        public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<Role> Roles { get; set; } = null!;
+        public virtual DbSet<UserRole> UsersRoles { get; set; } = null!;
+        public virtual DbSet<Session> Sessions { get; set; } = null!;
         public virtual DbSet<AnimeObject> AnimeObjects { get; set; } = null!;
         public virtual DbSet<Genre> Genres { get; set; } = null!;
 
@@ -25,6 +29,72 @@ namespace Anime.Data
             modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
                 .HasCharSet("utf8mb4");
 
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("users");
+                
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+                
+                entity.Property(e => e.Username)
+                    .HasColumnType("text")
+                    .HasColumnName("username");
+                
+                entity.Property(e => e.PasswordHash)
+                    .HasColumnType("text")
+                    .HasColumnName("password_hash");
+                
+                entity.Property(e => e.PasswordKey)
+                    .HasColumnType("text")
+                    .HasColumnName("password_key");
+            });
+            
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.ToTable("roles");
+                
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+                
+                entity.Property(e => e.Name)
+                    .HasColumnType("text")
+                    .HasColumnName("role");
+            });
+
+            modelBuilder.Entity<UserRole>(entity =>
+            {
+                entity.ToTable("users_roles");
+
+                entity.HasKey(e => new { e.UserId, e.RoleId });
+
+                entity
+                    .HasOne(e => e.User)
+                    .WithMany(e => e.UsersRoles)
+                    .HasForeignKey(e => e.UserId)
+                    .HasConstraintName("user_id");
+                
+                entity
+                    .HasOne(e => e.Role)
+                    .WithMany(e => e.UsersRoles)
+                    .HasForeignKey(e => e.RoleId)
+                    .HasConstraintName("role_id");
+            });
+            
+            modelBuilder.Entity<Session>(entity =>
+            {
+                entity.ToTable("sessions");
+                
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+                
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
+            });
+            
             modelBuilder.Entity<AnimeObject>(entity =>
             {
                 entity.ToTable("anime_objects");
