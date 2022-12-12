@@ -12,7 +12,6 @@ namespace Anime.Models
 
         public int Id { get; set; }
         public string? Name { get; set; }
-        public string? Image { get; set; }
 
         public virtual ICollection<AnimeObject> AnimeObjects { get; set; }
     }

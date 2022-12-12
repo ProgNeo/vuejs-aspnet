@@ -37,7 +37,6 @@
 <script setup>
 import {onBeforeMount, reactive, ref} from "vue"
 import axios from "axios";
-import AnimeService from "@/services/animeService"
 import GenresService from "@/services/genresService"
 
 const image =  ref()
@@ -63,12 +62,6 @@ async function submitForm() {
   formData.append('Description', data.description)
   formData.append('Info', data.info)
   formData.append('Image', data.image)
-
-  let response = await axios.post('/api/Anime', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  })
 
   message.value = "Успех!"
   resetForm()

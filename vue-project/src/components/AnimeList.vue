@@ -1,6 +1,6 @@
 <template>
   <b-card-group class="d-flex justify-content-center">
-    <AnimeCard @update="update" v-for="anime in props.animeList" :anime="anime" />
+    <AnimeCard @delete-anime-click="onDeleteClick" @edit-anime-click="onEditClick" v-for="anime in props.animeList" :anime="anime" />
   </b-card-group>
 </template>
 
@@ -11,9 +11,13 @@ const props = defineProps({
   animeList: Array
 })
 
-const emit = defineEmits(["update"])
+const emit = defineEmits(['delete-anime', 'edit-anime'])
 
-function update() {
-  emit("update")
+function onEditClick(animeObject) {
+  emit("edit-anime", animeObject)
+}
+
+function onDeleteClick(animeId) {
+  emit("delete-anime", animeId)
 }
 </script>

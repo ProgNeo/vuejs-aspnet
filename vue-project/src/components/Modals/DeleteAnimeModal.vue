@@ -9,7 +9,7 @@
         Отменить это действие будет невозможно
       </div>
       <div class="modal-footer">
-        <b-button type="button" variant="danger" data-bs-dismiss="modal" @click="$emit('delete', props.animeObject.id)">Удалить</b-button>
+        <b-button type="button" variant="danger" data-bs-dismiss="modal" @click="$emit('delete', animeObject.id)">Удалить</b-button>
         <b-button type="button" variant="outline-secondary" data-bs-dismiss="modal">Отмена</b-button>
       </div>
     </div>
@@ -19,15 +19,19 @@
 <script setup>
 import Modal from '@/components/Modal.vue'
 import {ref} from "vue"
-const props = defineProps({
-  animeObject: Object
-})
+
+const animeObject = ref(Object)
+
 const emit = defineEmits(["delete"])
+
 const modalRef = ref(null)
 
 defineExpose({
   show () {
     modalRef.value.show()
+  },
+  handAnime (object) {
+    animeObject.value = object
   }
 })
 </script>

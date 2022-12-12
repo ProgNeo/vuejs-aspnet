@@ -9,16 +9,11 @@
         <b-button v-if="type === '#info'" variant="light" active>Описание</b-button>
         <b-button v-else variant="light">Описание</b-button>
       </router-link>
-      <router-link to="#edit" class="m-3">
-        <b-button v-if="type === '#edit'" variant="light" active>Редактировать</b-button>
-        <b-button v-else variant="light">Редактировать</b-button>
-      </router-link>
     </div>
     <div class="d-flex flex-column border border-1 p-3">
       <div v-if="type === ''">Нажмите на кнопку чтобы что-то узнать</div>
       <AnimeImage v-else-if="type === '#image'" :image="anime.image" />
       <AnimeInfo v-else-if="type === '#info'" :info="anime.info" />
-      <AnimeEdit v-else-if="type === '#edit'" :anime="anime" />
     </div>
   </b-container>
 </template>
@@ -28,7 +23,6 @@ import {ref, onBeforeMount, watch} from "vue"
 import {useRoute} from 'vue-router'
 import AnimeImage from "@/components/AnimeImage.vue"
 import AnimeInfo from "@/components/AnimeInfo.vue"
-import AnimeEdit from "@/components/AnimeEdit.vue";
 import AnimeService from "@/services/animeService"
 
 const anime = ref();

@@ -63,10 +63,6 @@ namespace Anime.Data
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Image)
-                    .HasMaxLength(512)
-                    .HasColumnName("image");
-
                 entity.Property(e => e.Name)
                     .HasMaxLength(128)
                     .HasColumnName("name");

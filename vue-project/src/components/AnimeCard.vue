@@ -1,7 +1,4 @@
 <template>
-  <DeleteModal @delete="deleteAnimeObject" ref="deleteModalRef" :anime-object="props.anime"/>
-  <EditModal ref="editModalRef" :anime-object="props.anime"/>
-
   <div class="p-2 position-relative">
     <b-card
         :title="anime.title"
@@ -15,10 +12,10 @@
       <b-button variant="link" :to="{ path: `/anime/${anime.id}`, hash: '#image' }" class="card-link">Картинка</b-button>
       <b-button variant="link" :to="{ path: `/anime/${anime.id}`, hash: '#info' }" class="card-link">Описание</b-button>
       <div class="d-flex justify-content-center">
-        <b-button class="me-2" variant="outline-primary" @click="onEditClick">
+        <b-button class="me-2" variant="outline-primary" @click="onEditClick({...props.anime})">
           <FontAwesomeIcon icon="fas fa-pen" />
         </b-button>
-        <b-button variant="outline-danger" @click="onDeleteClick">
+        <b-button variant="outline-danger" @click="onDeleteClick(props.anime)">
           <FontAwesomeIcon icon="fas fa-trash" />
         </b-button>
       </div>
@@ -27,27 +24,14 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
-import DeleteModal from "@/components/DeleteAnimeModal.vue"
-import EditModal from "@/components/EditAnimeModal.vue"
-import AnimeService from "@/services/animeService"
+const emit = defineEmits(['delete-anime-click', 'edit-anime-click'])
 
-const emit = defineEmits(["update"])
-
-const deleteModalRef = ref()
-const editModalRef = ref()
-
-function onEditClick() {
-  editModalRef.value.show()
+function onEditClick(animeObject) {
+  emit("edit-anime-click", animeObject)
 }
 
-function onDeleteClick() {
-  deleteModalRef.value.show()
-}
-
-async function deleteAnimeObject(id) {
-  await AnimeService.delete(id)
-  emit("update")
+function onDeleteClick(animeObject) {
+  emit("delete-anime-click", animeObject)
 }
 
 const props = defineProps ({

@@ -39,11 +39,6 @@ const router = createRouter({
       path: '/search',
       name: 'search',
       component: SearchView
-    },
-    {
-      path: '/create',
-      name: 'create',
-      component: CreateView
     }
   ]
 })

@@ -12,15 +12,23 @@
 <script setup>
 import {ref, onMounted} from "vue"
 import {Modal} from "bootstrap"
+
 const modalRef = ref()
 let modalInstance = null
+
 onMounted(() => {
   modalInstance = new Modal(modalRef.value)
 })
+
 function show() {
   modalInstance.show()
 }
+function close() {
+  modalInstance.hide()
+}
+
 defineExpose({
-  show
+  show,
+  close
 })
 </script>
