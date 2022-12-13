@@ -126,5 +126,11 @@ namespace asp_project.Controllers
             var computeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             return computeHash.SequenceEqual(passwordHash);
         }
+
+        [HttpGet("check_authentication")]
+        public async Task<bool> CheckAuthentication()
+        {
+            return CheckSession();
+        }
     }
 }
