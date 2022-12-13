@@ -1,6 +1,0 @@
-version: "3.9"
-services:
-  daemon:
-    build: .
-    ports:
-      - "7227:7227"
