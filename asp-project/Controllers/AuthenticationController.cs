@@ -25,8 +25,7 @@ namespace asp_project.Controllers
         {
             if (_context.Users.Any(u => u.Username == request.Username))
             {
-                return new JsonResult(new BaseResponse(false, "This username is already exists!"));
-            }
+                return new JsonResult(new BaseResponse(false, "username-exist"));            }
             
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordKey);
 
@@ -48,8 +47,8 @@ namespace asp_project.Controllers
 
             _context.UsersRoles.Add(userRole);
             await _context.SaveChangesAsync();
-            
-            return new JsonResult(new BaseResponse(true, "Registration completed!"));
+
+            return new JsonResult(new BaseResponse(true, "registration-completed"));
         }
 
         [HttpPost("login")]
@@ -59,12 +58,12 @@ namespace asp_project.Controllers
             
             if (user == null)
             {
-                return new JsonResult(new BaseResponse(false, "User with this username not found!"));
+                return new JsonResult(new BaseResponse(false, "username-not-found"));
             }
 
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordKey))
             {
-                return new JsonResult(new BaseResponse(false, "Wrong password!"));
+                return new JsonResult(new BaseResponse(false, "wrong-password"));
             }
             
             var sessionId = (long)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
@@ -87,7 +86,7 @@ namespace asp_project.Controllers
                 Expires = DateTimeOffset.Now.AddMonths(1)
             });
 
-            return new JsonResult(new BaseResponse(true, "Registration completed!"));
+            return new JsonResult(new BaseResponse(true, "authorization-completed"));
         }
 
         [HttpPost("logout")]
@@ -106,11 +105,11 @@ namespace asp_project.Controllers
                     _context.Sessions.Remove(sessionToRemove);
                     await _context.SaveChangesAsync();
                     
-                    return new JsonResult(new BaseResponse(true, "The session is over"));
+                    return new JsonResult(new BaseResponse(true, "session-finish"));
                 }
             }
             
-            return new JsonResult(new BaseResponse(false, "The session is not found"));
+            return new JsonResult(new BaseResponse(false, "session-not-found"));
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordKey)

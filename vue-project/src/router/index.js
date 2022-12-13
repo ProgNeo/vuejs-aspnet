@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import NotFound from '../views/NotFound.vue'
 import AnimeDetail from '../views/AnimeDetail.vue'
 import SearchView from '../views/SearchView.vue'
+import useAuthenticationStore from "@/store/authenticationStore";
 
 function removeQueryParams(to) {
   if (Object.keys(to.query).length) {
@@ -38,8 +39,36 @@ const router = createRouter({
       path: '/search',
       name: 'search',
       component: SearchView
-    }
+    },
+    {
+      path: '/authorization',
+      name: 'authorization',
+      component: () => import('@/views/AuthorizationView.vue'),
+      meta: {
+        authorization: false
+      }
+    },
+    {
+      path: '/registration',
+      name: 'registration',
+      component: () => import('@/views/RegistrationView.vue'),
+      meta: {
+        authorization: false
+      }
+    },
   ]
+})
+
+router.beforeEach(async (to, from, next) => {
+  const authStore = await useAuthenticationStore()
+
+  if (to.meta.authorization !== undefined && authStore.checkAuth !== to.meta.authorization) {
+    next({
+      path: "/"
+    })
+    return
+  }
+  next()
 })
 
 export default router

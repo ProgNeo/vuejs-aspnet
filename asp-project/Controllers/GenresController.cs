@@ -87,19 +87,10 @@ namespace asp_project.Controllers
         [HttpPost]
         public async Task<ActionResult<Genre>> PostGenre(Genre genre)
         {
-            
             if (!CheckSession())
             {
                 return new JsonResult(new BaseResponse(false, "Access denied"));
             }
-            
-            var roles = await GetRolesByUser();
-            
-            if (!(roles.Contains(Roles.Moderator.ToString()) || roles.Contains(Roles.Superuser.ToString())))
-            {
-                return new JsonResult(new BaseResponse(false, "Access denied"));
-            }
-
             
             _context.Genres.Add(genre);
             await _context.SaveChangesAsync();

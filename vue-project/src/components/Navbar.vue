@@ -1,5 +1,6 @@
 <template>
   <CreateGenreModal @create="createGenre" ref="createModalRef"/>
+  <LogoutModal @logout="onLogout" ref="logoutModalRef"/>
   <b-container>
     <b-navbar toggleable="lg" type="light" variant="faded">
       <b-navbar-brand to="/"><FontAwesomeIcon icon="fas fa-cat" /></b-navbar-brand>
@@ -12,7 +13,15 @@
         </b-navbar-nav>
         <b-navbar-nav class="ms-auto">
           <b-nav-item :to="{ path: '/search' }" rigth>Поиск</b-nav-item>
-          <b-nav-item @click="onCreateClick">Добавить жанр</b-nav-item>
+          <b-nav-item v-if="authStore.canAction('User')" @click="onCreateClick" right>Добавить жанр</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="ms-2">
+          <b-nav-item v-if="!authStore.checkAuth" to="/authorization" right>
+            <b-button variant="outline-primary" :active="type === 'authorization'">Войти</b-button>
+          </b-nav-item>
+          <b-nav-item v-else right>
+            <b-button variant="outline-primary" @click="onLogoutClick">Выйти</b-button>
+          </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -23,7 +32,12 @@
 import {onBeforeMount, reactive, ref} from "vue"
 import GenresService from "@/services/genresService"
 import CreateGenreModal from "@/components/Modals/CreateGenreModal.vue";
+import LogoutModal from "@/components/Modals/LogoutModal.vue"
+import useAuthenticationStore from "@/store/authenticationStore"
 import axios from "axios";
+
+const authStore = useAuthenticationStore()
+const logoutModalRef = ref()
 
 const genres = ref([])
 
@@ -60,6 +74,13 @@ async function createGenre(genre) {
 
   createModalRef.value.close()
   await fetchData()
+}
+
+function onLogoutClick() {
+  logoutModalRef.value.show()
+}
+async function onLogout() {
+  await authStore.logout()
 }
 
 async function fetchData() {

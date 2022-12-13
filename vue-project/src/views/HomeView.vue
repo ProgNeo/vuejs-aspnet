@@ -5,7 +5,7 @@
 
   <div class="my-4 d-flex flex-row">
     <h2 class="me-3">Список аниме</h2>
-    <b-button class="me-2" variant="outline-primary" @click="onCreateClick">
+    <b-button v-if="authStore.canAction('User')" class="me-2" variant="outline-primary" @click="onCreateClick">
       <FontAwesomeIcon icon="fas fa-plus" />
     </b-button>
   </div>
@@ -16,6 +16,8 @@
 import {onBeforeMount, reactive, ref, watch} from "vue"
 import {useRoute} from "vue-router"
 import axios from "axios";
+
+import useAuthenticationStore from "@/store/authenticationStore"
 
 import AnimeList from "@/components/AnimeList.vue"
 import AnimeService from "@/services/animeService"
@@ -32,6 +34,7 @@ const createModalRef = ref()
 const editModalRef = ref()
 const deleteModalRef = ref()
 
+const authStore = useAuthenticationStore()
 const response = reactive({
   message: '',
   variant: '',

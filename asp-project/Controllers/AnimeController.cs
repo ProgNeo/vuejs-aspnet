@@ -98,13 +98,6 @@ namespace asp_project.Controllers
                 return new JsonResult(new BaseResponse(false, "Access denied"));
             }
             
-            var roles = await GetRolesByUser();
-            
-            if (!(roles.Contains(Roles.Moderator.ToString()) || roles.Contains(Roles.Superuser.ToString())))
-            {
-                return new JsonResult(new BaseResponse(false, "Access denied"));
-            }
-
             if (_webHostEnvironment == null) return BadRequest();
             
             var fileName = DateTime.Now.Ticks + ".png";
