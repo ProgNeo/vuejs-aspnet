@@ -14,7 +14,7 @@ builder.Services.AddDbContext<AnimeContext>(
     options =>
     {
         options.UseMySql(builder.Configuration.GetConnectionString("AnimeDB"), 
-            ServerVersion.Parse("8.0.31-0ubuntu0.22.04.1"));
+            ServerVersion.Parse("8.0.31-0ubuntu0.20.04.1"));
     });
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>

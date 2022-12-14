@@ -36,7 +36,7 @@ namespace Anime.Data
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
                     .HasColumnName("id");
-                
+
                 entity.Property(e => e.Username)
                     .HasColumnType("text")
                     .HasColumnName("username");

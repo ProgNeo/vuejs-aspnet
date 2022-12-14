@@ -2,24 +2,20 @@ version: "3"
 
 services:
   vue_project:
+    container_name: vue
     build: vue-project
     logging: 
       options:
         max-size: "200M"
         max-file: "4"
     restart: always
+    volumes:
+      - vue-vol:/usr/share/nginx/html
     ports:
       - "5173:80"
-  asp_project:
-    build: asp-project
-    logging:
-      options:
-        max-size: "200M"
-        max-file: "4"
-    restart: always
-    ports:
-      - "7227:80"
+
   mysql:
+    container_name: mysql 
     image: mysql:latest
     ports:
       - "3306:3306"
@@ -32,3 +28,23 @@ services:
       - MYSQL_PORT=3306
     volumes:
       - ./.mysql-data/db:/var/lib/mysql
+    restart: always
+
+  asp_project:
+    container_name: aspnet
+    build: asp-project
+    logging:
+      options:
+        max-size: "200M"
+        max-file: "4"
+    restart: always
+    depends_on:
+      - mysql
+    volumes:
+      - ./wwwroot/Media:/app/wwwroot/Media
+    ports:
+      - "7227:80"
+
+volumes:
+  vue-vol:
+    external: true
