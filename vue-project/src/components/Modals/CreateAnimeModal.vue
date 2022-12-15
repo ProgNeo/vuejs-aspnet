@@ -17,7 +17,7 @@
 
           <b-col sm="4">
             <select v-model="anime.genre" class="form-select">
-              <option v-for="genre in props.genres" :value="genre.id">{{ genre.title }}</option>
+              <option v-for="genre in props.genres" :value="genre.id">{{ genre.name }}</option>
             </select>
           </b-col>
 

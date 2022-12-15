@@ -111,7 +111,7 @@ namespace asp_project.Controllers
                 Id = 0,
                 Title = viewModel.Title,
                 Genre = viewModel.Genre,
-                Image = $"{Request.Scheme}://{Request.Host}/media/{fileName}",
+                Image = $"/media/{fileName}",
                 Description = viewModel.Description,
                 Info = viewModel.Info
             };
