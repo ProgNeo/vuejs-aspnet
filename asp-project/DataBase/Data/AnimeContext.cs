@@ -20,7 +20,6 @@ namespace Anime.Data
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<UserRole> UsersRoles { get; set; } = null!;
-        public virtual DbSet<Session> Sessions { get; set; } = null!;
         public virtual DbSet<AnimeObject> AnimeObjects { get; set; } = null!;
         public virtual DbSet<Genre> Genres { get; set; } = null!;
 
@@ -80,19 +79,6 @@ namespace Anime.Data
                     .WithMany(e => e.UsersRoles)
                     .HasForeignKey(e => e.RoleId)
                     .HasConstraintName("role_id");
-            });
-            
-            modelBuilder.Entity<Session>(entity =>
-            {
-                entity.ToTable("sessions");
-                
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("id");
-                
-                entity.Property(e => e.UserId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("user_id");
             });
             
             modelBuilder.Entity<AnimeObject>(entity =>
