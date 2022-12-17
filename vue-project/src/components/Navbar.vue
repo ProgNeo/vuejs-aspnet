@@ -13,7 +13,7 @@
         </b-navbar-nav>
         <b-navbar-nav class="ms-auto">
           <b-nav-item :to="{ path: '/search' }" rigth>Поиск</b-nav-item>
-          <b-nav-item v-if="authStore.canAction('User')" @click="onCreateClick" right>Добавить жанр</b-nav-item>
+          <b-nav-item v-if="authStore.canAction('user')" @click="onCreateClick" right>Добавить жанр</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ms-2">
           <b-nav-item v-if="!authStore.checkAuth" to="/authorization" right>

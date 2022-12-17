@@ -75,7 +75,7 @@ public class AuthenticationController : ControllerBase
 
         var claims = new List<Claim>
         {
-            new Claim(ClaimsIdentity.DefaultNameClaimType, user.Username)
+            new(ClaimsIdentity.DefaultNameClaimType, user.Username)
         };
         claims.AddRange(user.UsersRoles
             .Select(usersRole => new Claim(ClaimsIdentity.DefaultRoleClaimType, usersRole.Role.Name)));

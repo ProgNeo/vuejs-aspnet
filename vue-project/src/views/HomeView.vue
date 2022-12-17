@@ -5,7 +5,7 @@
 
   <div class="my-4 d-flex flex-row">
     <h2 class="me-3">Список аниме</h2>
-    <b-button v-if="authStore.canAction('User')" class="me-2" variant="outline-primary" @click="onCreateClick">
+    <b-button v-if="authStore.canAction('user')" class="me-2" variant="outline-primary" @click="onCreateClick">
       <FontAwesomeIcon icon="fas fa-plus" />
     </b-button>
   </div>

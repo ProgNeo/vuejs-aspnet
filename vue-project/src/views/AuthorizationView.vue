@@ -3,13 +3,8 @@
     <div class="wrapper">
       <h2>Авторизация</h2>
 
-      <b-alert v-if="showAlert.usernameNotFound" show variant="warning">
-        <div>Имя пользователя не найдено!</div>
-        Для начала пройдите регистрацию
-      </b-alert>
-
-      <b-alert v-if="showAlert.wrongPassword" show variant="danger">
-        Неверный пароль
+      <b-alert v-if="showAlert.wrongUsernameOrPassword" show variant="danger">
+        Неверное имя пользователя или пароль
       </b-alert>
 
       <form ref="loginForm" @submit.prevent="onLogin" method="POST" class="row g-3 mt-2">
@@ -52,15 +47,11 @@ async function onLogin() {
   showAlert.usernameNotFound = false
   showAlert.wrongPassword = false
   let request = await login(user)
-  if (request.result) {
+  if (request.status_code === 200) {
     await router.push("/")
-    return
   }
-  if (request.message === 'username-not-found') {
-    showAlert.usernameNotFound = true
-  }
-  else if (request.message === 'wrong-password') {
-    showAlert.wrongPassword = true
+  else if (request.status_code === 401) {
+    showAlert.wrongUsernameOrPassword = true
   }
 }
 </script>

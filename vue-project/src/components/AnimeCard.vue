@@ -11,7 +11,7 @@
     >
       <b-button variant="link" :to="{ path: `/anime/${anime.id}`, hash: '#image' }" class="card-link">Картинка</b-button>
       <b-button variant="link" :to="{ path: `/anime/${anime.id}`, hash: '#info' }" class="card-link">Описание</b-button>
-      <div v-if="authStore.canAction('Moderator')" class="d-flex justify-content-center">
+      <div v-if="authStore.canAction('moderator')" class="d-flex justify-content-center">
         <b-button class="me-2" variant="outline-primary" @click="onEditClick({...props.anime})">
           <FontAwesomeIcon icon="fas fa-pen" />
         </b-button>
